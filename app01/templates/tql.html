@@ -1,0 +1,64 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{% static 'plugins/bootstrap-3.4.1-dist/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'plugins/font-awesome-4.7.0/css/font-awesome.css' %}">
+</head>
+<body>
+<div class="col-sm-6">
+    <div class="panel panel-info">
+        <div class="panel-heading">例子</div>
+        <div class="panel-body">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>id</th>
+                    <th>name</th>
+                    <th>mobile</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>{{ n1.0 }}</td>
+                    <td>{{ n1.1 }}</td>
+                    <td>{{ n1.2 }}</td>
+                </tr>
+                <tr>
+                    {% for k,v in n2.items %}
+                        <td>{{ v }}</td>
+                    {% endfor %}
+                </tr>
+                {% for i in n3 %}
+                    <tr>
+                        <td>{{ i.id }}</td>
+                        <td>{{ i.name }}</td>
+                        <td>{{ i.mobile }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="col-sm-4">
+    <div class="panel panel-info">
+        <div class="panel-heading">判断变量【n0】是否为"你好"</div>
+        <div class="panel-body">
+            {% if n0 == "你好" %}
+                <h1>是</h1>
+            {% elif n0 == "xxx" %}
+                <h1>是xxx</h1>
+            {% else %}
+                <h1>否</h1>
+            {% endif %}
+        </div>
+
+    </div>
+</div>
+<script src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
+<script src="{% static 'plugins/bootstrap-3.4.1-dist/js/bootstrap.js' %}"></script>
+</body>
+</html>

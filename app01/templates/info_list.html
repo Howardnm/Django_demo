@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{% static 'plugins/bootstrap-3.4.1-dist/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'plugins/font-awesome-4.7.0/css/font-awesome.css' %}">
+</head>
+<body>
+<a href="/info/add" class="btn btn-primary">添加</a>
+<div class="col-md-10">
+    <div class="panel panel-info">
+        <div class="panel-heading">用户列表</div>
+        <table class="table table-bordered panel-body">
+            <thead>
+            <tr>
+                <th>id</th>
+                <th>名字</th>
+                <th>密码</th>
+                <th>年龄</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for obj in n0 %}
+                <tr>
+                    <td>{{ obj.id }}</td>
+                    <td>{{ obj.name }}</td>
+                    <td>{{ obj.password }}</td>
+                    <td>{{ obj.age }}</td>
+                    <td>
+                        <a class="btn btn-xs btn-primary">编辑</a>
+                        <a class="btn btn-xs btn-danger" href="/info/delete?nid={{ obj.id }}">删除</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<script src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
+<script src="{% static 'plugins/bootstrap-3.4.1-dist/js/bootstrap.js' %}"></script>
+</body>
+</html>
