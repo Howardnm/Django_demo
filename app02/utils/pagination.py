@@ -1,17 +1,17 @@
 """
 自定义的分页组件，使用方法：
 # 在视图函数中：
-def pretty_list(request):
-    # 1、根据需求筛选数据
-    queryset = models.PrettyNum.objects.filter(**data_dict).order_by("id")
-    # 2、实例化分页对象
-    page_obj = Pagination(request, queryset, "page")
-    # 3、
-    context = {
-        "queryset": page_obj.page_queryset,  # 分完页的数据
-        "page_string": page_obj.html()       # html页码
-    }
-    return render(request, "pretty_list.html", context)
+    def pretty_list(request):
+        # 1、根据需求筛选数据
+        queryset = models.PrettyNum.objects.filter(**data_dict).order_by("id")
+        # 2、实例化分页对象
+        page_obj = Pagination(request, queryset, "page")
+        # 3、
+        context = {
+            "queryset": page_obj.page_queryset,  # 分完页的数据
+            "page_string": page_obj.html()       # html页码
+        }
+        return render(request, "pretty_list.html", context)
 
 # 在HTML页面中：
     {% for obj in queryset %}
@@ -39,14 +39,16 @@ class Pagination:
         :param page_param: 在URL中传递的获取分页的参数，例如：/pretty/list?page=12
         :param plus: 显示当前页的前后页码按钮数量
         """
-        # page = request.GET.get(page_param, 1)
-        # if page.isdecimal():
-        #     page = int(page)
-        # else:
-        #     page = 1
+
+        import copy
+        query_dict = copy.deepcopy(request.GET)
+        query_dict._mutable = True
+        self.query_dict = query_dict
+        self.page_param = page_param
 
         if request.GET.get(page_param, 1):
-            page = abs(int(request.GET.get("page", 1)))  # 取绝对值
+            page = int(request.GET.get("page", 1))
+            page = 1 if page <= 0 else page
         else:
             page = 1
 
@@ -65,7 +67,7 @@ class Pagination:
 
     def html(self):
         """
-        :return: HTML若干个<li></li>的文本
+        :return: 若干个<li></li>的HTML文本的字符串
         """
         # 计算出，显示当前页的前2页，后2页
         start_page = self.page - self.plus
@@ -78,21 +80,24 @@ class Pagination:
 
         """ 制作html页码 """
         page_str_list = []
-        # 上一页
+        # 首页
+        self.query_dict.setlist(self.page_param, [1])
         if self.page > 1 + self.plus:
-            ele = f'<li><a href="?page={1}"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span></a></li>'
+            ele = f'<li><a href="?{self.query_dict.urlencode()}"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span></a></li>'
             page_str_list.append(ele)
         # 中间页码
         for i in range(start_page, end_page):
+            self.query_dict.setlist(self.page_param, [i])
             if 0 < i <= self.total_page_count:
                 if i == self.page:
-                    ele = f'<li class="active"><a href="?page={i}">{i}</a></li>'
+                    ele = f'<li class="active"><a href="?{self.query_dict.urlencode()}">{i}</a></li>'
                 else:
-                    ele = f'<li><a href="?page={i}">{i}</a></li>'
+                    ele = f'<li><a href="?{self.query_dict.urlencode()}">{i}</a></li>'
                 page_str_list.append(ele)
-        # 下一页
+        # 尾页
+        self.query_dict.setlist(self.page_param, [self.total_page_count])
         if self.page < self.total_page_count - self.plus:
-            ele = f'<li><a href="?page={self.total_page_count}"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></li>'
+            ele = f'<li><a href="?{self.query_dict.urlencode()}"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></li>'
             page_str_list.append(ele)
         page_string = mark_safe("".join(page_str_list))  # 导入django的mark_safe模块，字符串才会写进html页面中
 
