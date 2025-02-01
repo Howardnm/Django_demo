@@ -42,7 +42,7 @@ class Pagination:
 
         import copy
         query_dict = copy.deepcopy(request.GET)
-        query_dict._mutable = True
+        query_dict._mutable = True  # 把对象变为可变状态（Django中默认不可修改状态）
         self.query_dict = query_dict
         self.page_param = page_param
 
@@ -96,9 +96,26 @@ class Pagination:
                 page_str_list.append(ele)
         # 尾页
         self.query_dict.setlist(self.page_param, [self.total_page_count])
+
+        search_string = """
+        </ul>
+        <ul class="pagination" style="width: 130px; margin-left: 30px">
+            <form method="get">
+                <div class="input-group">
+                    <input type="number" name="page" class="form-control" placeholder="页码">
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary" type="submit">
+                            跳转
+                        </button>
+                    </span>
+                </div>
+            </form>
+        """
+
         if self.page < self.total_page_count - self.plus:
             ele = f'<li><a href="?{self.query_dict.urlencode()}"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></li>'
             page_str_list.append(ele)
+        page_str_list.append(search_string)
         page_string = mark_safe("".join(page_str_list))  # 导入django的mark_safe模块，字符串才会写进html页面中
 
         return page_string

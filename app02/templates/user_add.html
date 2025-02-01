@@ -1,4 +1,9 @@
 {% extends "layout.html" %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css' %}">
+{% endblock %}
 
 {% block content %}
     <div class="container">
@@ -33,7 +38,7 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label">入职时间</label>
                     <div class="col-sm-3">
-                        <input type="date" class="form-control" name="creat_time" placeholder="入职时间">
+                        <input id="dt" class="form-control" name="creat_time" placeholder="入职时间">
                     </div>
                     <label class="col-sm-2 control-label">性别</label>
                     <div class="col-sm-3">
@@ -64,3 +69,21 @@
         </div>
     </div>
 {% endblock %}
+
+{% block js %}
+    <script src="{% static 'plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js' %}"></script>
+    <script src="{% static 'plugins/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js' %}"></script>
+
+    <script>
+    $(function () {
+        $('#dt').datepicker({
+            format: 'yyyy-mm-dd',
+            startDate: '0',
+            language: "zh-CN",
+            autoclose: true
+        });
+
+    })
+    </script>
+{% endblock %}
+
