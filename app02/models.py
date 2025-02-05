@@ -1,4 +1,13 @@
+"""
+定义一些数据表，这会在数据库生成数据表，并通过DOM连接协同工作
+"""
+
 from django.db import models
+
+
+class Admin(models.Model):
+    username = models.CharField(verbose_name="用户名", max_length=32)
+    password = models.CharField(verbose_name="密码", max_length=64)
 
 
 class Department(models.Model):

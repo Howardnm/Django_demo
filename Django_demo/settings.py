@@ -50,6 +50,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     # 'silk.middleware.SilkyMiddleware',
+    'app02.middleware.auth.AuthMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 

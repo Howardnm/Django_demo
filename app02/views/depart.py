@@ -5,7 +5,7 @@
 
 from django.shortcuts import render, HttpResponse, redirect
 from app02 import models
-from app02.utils.pagination import Pagination
+from app02.utils.pagination import Pagination  # 导入分页模块
 
 
 def index(request):

@@ -19,7 +19,7 @@ from django.urls import path, include
 
 from Django_demo import settings
 # from app01 import views
-from app02.views import depart, user, pretty
+from app02.views import depart, user, pretty, admin, account
 
 urlpatterns = [
     # path('silk/', include('silk.urls', namespace='silk')),
@@ -43,7 +43,19 @@ urlpatterns = [
     # path('info/delete', views.info_delete),
 
     # app02
-    path('', depart.index),
+    # 登录
+    path('login', account.login),
+    path('image/code', account.image_code),
+    path('register', account.register),
+    path('logout', account.logout),
+
+    # 管理员列表
+    path('admin/list', admin.admin_list),
+    path('admin/add', admin.admin_add),
+    path('admin/<int:nid>/edit', admin.admin_edit),
+    path('admin/<int:nid>/delete', admin.admin_delete),
+    path('admin/<int:nid>/reset_pwd', admin.admin_reset_pwd),
+
     # 部门列表
     path('depart/list', depart.depart_list),
     path('depart/add', depart.depart_add),
