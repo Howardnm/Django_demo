@@ -46,7 +46,7 @@ class LoginModelForm(BootStrapModelForm):
         cleaned_data = super().clean()
         # cleaned_data = {'username': 'admin', 'password': 'qwe', 'code': '1234'}  # 用户填入的表单内容
         # 1 **先检查验证码**
-        input_code = cleaned_data.get("code")
+        input_code = cleaned_data.get("code", "")
         session_code = self.request.session.get("image_code")
         if not session_code:
             self.add_error("code", "验证码已过期")
