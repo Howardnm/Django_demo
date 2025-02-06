@@ -1,5 +1,20 @@
-# django命令生成数据库表
+## django初始化
+1. 安装 Django
+```
+pip install django
+```
 
+2. 创建 Django 新项目
+```shell
+django-admin startproject myproject
+```
+
+- 然后进入项目目录：
+```shell
+cd myproject
+```
+
+## django命令生成数据库表
 ```shell
 # 每次修改完models.py，要执行以下命令同步到数据库
 python manage.py makemigrations
@@ -54,5 +69,11 @@ models.py ---> /utils/form.py --> | ~~~~~~~~~~~~~ |
     用户访问 --> process_request(M1)  --(返回None)--> process_request(M2) --(返回None)--> |~~~~~~~~~~~~~~~~~~~~|
                        |(有返回值）                          |(有返回值）                 | def index(request) |
     用户响应 <-- process_response(M1) <------------- process_response(M2) <------------ |~~~~~~~~~~~~~~~~~~~~|
+```
+
+## 运行 django
+```shell
+python manage.py runserver
+python manage.py runserver 0.0.0.0:8080
 ```
 
