@@ -192,3 +192,13 @@ class PrettyEditModelForm(BootStrapModelForm):
         fields = "__all__"  # 所有字段
         # 禁用字段方法2
         # exclude = ['mobile']  # 排除该字段
+
+
+class TaskModelForm(BootStrapModelForm):
+    class Meta:
+        model = models.Task
+        fields = "__all__"
+        widgets = {
+            # "detail": forms.Textarea,
+            "detail": forms.TextInput  # 自定义输入框样式
+        }

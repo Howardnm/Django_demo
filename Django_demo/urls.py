@@ -19,7 +19,7 @@ from django.urls import path, include
 
 from Django_demo import settings
 # from app01 import views
-from app02.views import depart, user, pretty, admin, account
+from app02.views import depart, user, pretty, admin, account, task
 
 urlpatterns = [
     # path('silk/', include('silk.urls', namespace='silk')),
@@ -74,6 +74,10 @@ urlpatterns = [
     path('pretty/add', pretty.pretty_add),
     path('pretty/<int:nid>/edit', pretty.pretty_edit),
     path('pretty/<int:nid>/delete', pretty.pretty_delete),
+
+    path('task/list', task.task_list),
+    path('task/ajax', task.ajax),
+    path('task/add', task.add),
 ]
 
 if settings.DEBUG:
