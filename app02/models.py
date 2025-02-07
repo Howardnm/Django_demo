@@ -77,3 +77,17 @@ class Task(models.Model):
     tittle = models.CharField(verbose_name="标题", max_length=64)
     detail = models.TextField(verbose_name="任务详细信息")
     user = models.ForeignKey(verbose_name="负责人", to="Admin", to_field="id", on_delete=models.CASCADE)
+
+
+class Order(models.Model):
+    """ 订单 """
+    oid = models.CharField(verbose_name="订单号", max_length=64)
+    tittle = models.CharField(verbose_name="名称", max_length=32)
+    price = models.DecimalField(verbose_name="价格", max_digits=10, decimal_places=2, default=0)  # 整数位8(10-2)，小数位2
+    status_choices = {
+        (1, "待支付"),
+        (2, "已支付"),
+    }
+    status = models.SmallIntegerField(verbose_name="状态", choices=status_choices, default=1)
+    # 数据库的真键是：admin_id，值是储存admin的数据表中的行id
+    admin = models.ForeignKey(verbose_name="管理员", to="Admin", on_delete=models.CASCADE)

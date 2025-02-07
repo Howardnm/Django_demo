@@ -14,15 +14,28 @@
         return render(request, "pretty_list.html", context)
 
 # 在HTML页面中：
-    {% for obj in queryset %}
-        <tr>
-            <td>{{ obj.xxx }}</td>
-        </tr>
-    {% endfor %}
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>...</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for obj in queryset %}
+                <tr>
+                    <th>{{ obj.id }}</th>
+                    <td>{{ obj.xxx }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
-    <ul class="pagination">
-        {{ page_string }}
-    </ul>
+    <div>
+        <ul class="pagination">
+            {{ page_string }}
+        </ul>
+    </div>
 
 """
 from django.utils.safestring import mark_safe

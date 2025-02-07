@@ -1,17 +1,27 @@
 import json
 
 from django.shortcuts import render, HttpResponse, redirect
+from app02 import models
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.forms.utils import ErrorDict
 
 from app02.utils.form import TaskModelForm
+from app02.utils.pagination import Pagination
 
 
 def task_list(request):
     """ 任务列表 """
+    # 去数据库获取所有的任务
+    queryset = models.Task.objects.all().order_by("-id")
+    page_obj = Pagination(request, queryset, "page")
     form = TaskModelForm()
-    return render(request, "task_list.html", {"form": form})
+    context = {
+        "form": form,
+        "queryset": page_obj.page_queryset,
+        "page_string": page_obj.html()
+    }
+    return render(request, "task_list.html", context)
 
 
 @csrf_exempt  # 免除 csrf_token 认证（如果不用这个，可以在html用脚本读取请求头的 csrf_token ，并在ajax进行POST提交）

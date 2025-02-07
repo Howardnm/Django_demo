@@ -25,8 +25,40 @@
                 </form>
             </div>
         </div>
-
-
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                任务列表
+            </div>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>标题</th>
+                    <th>等级</th>
+                    <th>负责人</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for obj in queryset %}
+                    <tr>
+                        <th>{{ obj.id }}</th>
+                        <td>{{ obj.tittle }}</td>
+                        <td>{{ obj.get_level_display }}</td>
+                        <td>{{ obj.user }}</td>
+                        <td>
+                            <a class="btn btn-xs btn-primary" href="#">编辑</a>
+                            <a class="btn btn-xs btn-danger" href="#">删除</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <ul class="pagination">
+            {{ page_string }}
+        </ul>
         <h1>ajax学习</h1>
         <h3>示例1</h3>
         <input id="btn1" type="button" class="btn btn-primary" value="点击"/>
@@ -123,12 +155,8 @@
         }
 
         function bindBtnAddEvent() {
-            $("#btnAdd").click(
-                // 在 btn1 标签上绑定一个点击事件
-                function () {
-
+            $("#btnAdd").click(function () {  // 在 btn1 标签上绑定一个点击事件
                     $(".error-msg").empty();  // 每次点击时先清空错误信息
-
                     $.ajax({
                         url: "/task/add",
                         type: "post",
@@ -137,10 +165,11 @@
                         success: function (res) {
                             if (res.status) {
                                 alert("添加成功");
+                                location.reload();// 用JS实现页面的刷新
                             } else {
                                 $.each(  // 循环res.error字典
                                     res.error, function (k, v) {
-                                    $("#id_" + k).next().text(v[0]);  // $("#id_" + k)是input框的id，该id是modelform自动写上去的。next()指的是input标签的下一个标签，即<span>
+                                        $("#id_" + k).next().text(v[0]);  // $("#id_" + k)是input框的id，该id是modelform自动写上去的。next()指的是input标签的下一个标签，即<span>
                                     }
                                 )
                             }

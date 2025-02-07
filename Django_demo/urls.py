@@ -19,7 +19,7 @@ from django.urls import path, include
 
 from Django_demo import settings
 # from app01 import views
-from app02.views import depart, user, pretty, admin, account, task
+from app02.views import depart, user, pretty, admin, account, task, order
 
 urlpatterns = [
     # path('silk/', include('silk.urls', namespace='silk')),
@@ -75,13 +75,19 @@ urlpatterns = [
     path('pretty/<int:nid>/edit', pretty.pretty_edit),
     path('pretty/<int:nid>/delete', pretty.pretty_delete),
 
+    # 任务管理
     path('task/list', task.task_list),
     path('task/ajax', task.ajax),
     path('task/add', task.add),
+
+    # 订单管理
+    path('order/list', order.order_list),
+    path('order/add', order.order_add),
 ]
 
 if settings.DEBUG:
     import debug_toolbar
+
     urlpatterns += [
         path('__debug__/', include(debug_toolbar.urls)),
     ]

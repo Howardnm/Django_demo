@@ -202,3 +202,10 @@ class TaskModelForm(BootStrapModelForm):
             # "detail": forms.Textarea,
             "detail": forms.TextInput  # 自定义输入框样式
         }
+
+
+class OrderModelForm(BootStrapModelForm):
+    class Meta:
+        model = models.Order
+        fields = "__all__"
+        exclude = ["oid", "admin"]  # 排除不想显示的数据列
