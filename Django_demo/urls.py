@@ -19,7 +19,7 @@ from django.urls import path, include
 
 from Django_demo import settings
 # from app01 import views
-from app02.views import depart, user, pretty, admin, account, task, order
+from app02.views import depart, user, pretty, admin, account, task, order, chart
 
 urlpatterns = [
     # path('silk/', include('silk.urls', namespace='silk')),
@@ -43,6 +43,9 @@ urlpatterns = [
     # path('info/delete', views.info_delete),
 
     # app02
+    # 首页
+    path('', admin.admin_list),
+
     # 登录
     path('login', account.login),
     path('image/code', account.image_code),
@@ -83,6 +86,14 @@ urlpatterns = [
     # 订单管理
     path('order/list', order.order_list),
     path('order/add', order.order_add),
+    path('order/delete', order.order_delete),
+    path('order/detail', order.order_detail),
+    path('order/edit', order.order_edit),
+
+    # 数据统计
+    path('chart/list', chart.chart_list),
+    path('chart/bar', chart.chart_bar),
+
 ]
 
 if settings.DEBUG:
