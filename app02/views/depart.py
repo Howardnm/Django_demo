@@ -52,3 +52,15 @@ def depart_edit(request, nid):
     if depart_name:
         models.Department.objects.filter(id=nid).update(name=depart_name)
     return redirect("/depart/list")
+
+
+def depart_multi(request):
+    """ 批量上传（excel文件） """
+    from openpyxl import load_workbook
+    # 1.获取用户上传的文件对象
+    file_obj = request.FILES.get("upload_file")
+    # 2.对象传递给openpyxl，又openpyxl读取文件的内容
+    wb = load_workbook(file_obj)
+    sheet = wb.worksheets[0]
+
+    return redirect('/depart/list')
