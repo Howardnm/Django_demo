@@ -14,8 +14,36 @@ django-admin startproject myproject
 cd myproject
 ```
 
-## django命令生成数据库表
+- 创建app
 ```shell
+python manage.py startapp app01
+```
+
+```python
+# 确保app已注册到 【settings.py】
+INSTALLED_APPS += ['app01.apps.App01Config',]
+```
+
+## django数据库配置
+```shell
+# 启动MySQL服务, 自带工具创建数据库
+create database django_demo DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
+# django命令生成数据库表
+pip install mysqlclient
+# python3.8 安装mysqlclient 2.2.4（2.2.4是最后一个版本支持py3.8）
+
+# 在settings.py文件中进行配置和修改。
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'django_demo',  # 数据库名字
+        'USER': 'root',
+        'PASSWORD': 'root123',
+        'HOST': '127.0.0.1',  # 那台机器安装了MySQL
+        'PORT': 3306,
+    }
+}
+
 # 每次修改完models.py，要执行以下命令同步到数据库
 python manage.py makemigrations
 python manage.py migrate
