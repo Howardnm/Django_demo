@@ -7,6 +7,7 @@ from django import forms
 
 class BootStrap:
     """ BootStrap表单样式 """
+    bootstrap_exclude_fields = []  # 排除一些字段，让其不渲染BootStrap样式
 
     def __init__(self, *args, request=None, **kwargs):
         super().__init__(*args, **kwargs)  # 继承父级的__init__函数，再添加内容，避免直接覆盖父级的内容
@@ -14,6 +15,8 @@ class BootStrap:
         # 循环找到所有的插件，添加了Bootstrap的form-control类，使其具有 Bootstrap 样式。
         # Django 自动 将 models.CharField 的 verbose_name 映射 为 forms.CharField 的 label
         for name, field in self.fields.items():
+            if name in self.bootstrap_exclude_fields:
+                continue
             if field.widget.attrs:
                 field.widget.attrs["class"] = "form-control"
                 field.widget.attrs["placeholder"] = field.label

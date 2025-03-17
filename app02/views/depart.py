@@ -63,4 +63,12 @@ def depart_multi(request):
     wb = load_workbook(file_obj)
     sheet = wb.worksheets[0]
 
+    # 3.循环获取每一行数据
+    for row in sheet.iter_rows(min_row=2):
+        text = row[0].value
+        print(text)
+        exists = models.Department.objects.filter(name=text).exists()
+        if not exists:
+            models.Department.objects.create(name=text)
+
     return redirect('/depart/list')

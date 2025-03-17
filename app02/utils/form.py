@@ -7,7 +7,7 @@ from django import forms
 from app02 import models
 from django.core.validators import RegexValidator
 from django.core.exceptions import ValidationError
-from app02.utils.bootstrap import BootStrapModelForm, BootStrapForm
+from app02.utils.bootstrap import BootStrapModelForm, BootStrapForm, BootStrap
 from app02.utils.encrypt import md5
 from django.contrib.auth.hashers import make_password, check_password
 
@@ -209,3 +209,20 @@ class OrderModelForm(BootStrapModelForm):
         model = models.Order
         fields = "__all__"
         exclude = ["oid", "admin"]  # 排除不想显示的数据列
+
+
+class UpForm(BootStrapForm):
+    """ 上传文件和数据 """
+    bootstrap_exclude_fields = ["img"]
+    name = forms.CharField(label="姓名")
+    age = forms.CharField(label="年龄")
+    img = forms.FileField(label="头像")
+
+
+class UpModelForm(BootStrapModelForm):
+    """ 上传文件和数据 （modelForm）"""
+    bootstrap_exclude_fields = ['img']
+
+    class Meta:
+        model = models.City
+        fields = "__all__"

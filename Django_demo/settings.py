@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     # 'app01.apps.App01Config',
     'app02.apps.App02Config',
     # 'silk',
-    'debug_toolbar',
 ]
 
 MIDDLEWARE = [
@@ -51,7 +50,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     # 'silk.middleware.SilkyMiddleware',
     'app02.middleware.auth.AuthMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'Django_demo.urls'

@@ -91,3 +91,18 @@ class Order(models.Model):
     status = models.SmallIntegerField(verbose_name="状态", choices=status_choices, default=1)
     # 数据库的真键是：admin_id，值是储存admin的数据表中的行id
     admin = models.ForeignKey(verbose_name="管理员", to="Admin", on_delete=models.CASCADE)
+
+
+class Boss(models.Model):
+    """ 老板 """
+    name = models.CharField(verbose_name="姓名", max_length=32)
+    age = models.IntegerField(verbose_name="年龄")
+    img = models.CharField(verbose_name="头像", max_length=128)
+
+
+class City(models.Model):
+    """ 城市 """
+    name = models.CharField(verbose_name="名称", max_length=32)
+    count = models.IntegerField(verbose_name="人口")
+    # FileField本质上在数据库也是CharField
+    img = models.FileField(verbose_name="logo", max_length=128, upload_to="city/")  # upload_to指定上传目录
